@@ -1,0 +1,35 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans 
+	http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+	<bean id="consumer"
+		class="com.alibaba.rocketmq.client.consumer.DefaultMQPushConsumer">
+		<constructor-arg name="consumerGroup" value="${rocketmq.cosumerGroup}" />
+		<property name="namesrvAddr" value="${rocketmq.namesrvAddr}" />
+
+	</bean>
+
+	<bean id="producer" class="com.alibaba.rocketmq.client.producer.DefaultMQProducer">
+		<constructor-arg name="producerGroup" value="${rocketmq.producerGroup}" />
+		<property name="namesrvAddr" value="${rocketmq.namesrvAddr}" />
+	</bean>
+
+	<bean id="messageListener" class="tf56.spider.schedule.listener.MessageListener"></bean>
+
+	<bean id="mqClient" class="com.tf56.queue.client.RocketMQClientImpl" init-method="init" >
+		<property name="consumer">
+			<ref bean="consumer" />
+		</property>
+		<property name="producer">
+			<ref bean="producer" />
+		</property>
+		<property name="messageListener">
+			<ref bean="messageListener" />
+		</property>
+		<property name="topicTags" value="${topic.recharge};${topic.recharge.cancel};${topic.freeze};${topic.freeze.ctu};${topic.thaw};${topic.thaw.ctu};${topic.transfer};${topic.withdraw};${topic.withdrawcancel}" />
+	</bean>
+
+
+</beans>

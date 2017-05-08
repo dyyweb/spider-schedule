@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+  <property resource="conf/logback.properties"/>
+  <appender name="Console" class="ch.qos.logback.core.ConsoleAppender">
+    <encoder>
+      <pattern>
+        %d{yyyy-MM-dd HH:mm:ss.SSS} %-4relative [%thread] %-5level %logger{30} - %msg%n
+      </pattern>
+    </encoder>
+  </appender>
+  <appender name="FileAppender" class="ch.qos.logback.core.FileAppender">
+    <file>${log.dir}</file>
+    <encoder>
+      <pattern>
+        %d{yyyy-MM-dd HH:mm:ss.SSS} %-4relative [%thread] %-5level %logger{30} - %msg%n
+      </pattern>
+    </encoder>
+  </appender>
+
+  <!--带sql-->
+<!--  <logger name="java.sql.Statement" level="DEBUG" />
+  <logger name="org.apache.zookeeper" level="warn" />
+  <logger name="java.sql.PreparedStatement" level="DEBUG" />
+  <logger name="tf56" level="info"/>
+  <root level="debug">
+    <appender-ref ref="Console"/>
+    <appender-ref ref="FileAppender"/>
+  </root>-->
+
+  <!--不带sql-->
+  <logger name="tf56" level="info"/>
+  <root level="${log.level}">
+    <appender-ref ref="Console"/>
+    <appender-ref ref="FileAppender"/>
+  </root>
+</configuration>
